@@ -4,9 +4,7 @@
 // Some keywords can be found alone within a sentence, some others can't because the sentence
 // wouldn't have any meaning. Ex: the keyword (THIS IS) can not be found alone within a given
 // sentence because there is no proper meaning to it.
-//
-// Author: Gonzales Cenelia
-//
+
 
 #include "chatterbot10.h"
 #include "strings.cpp"
@@ -19,28 +17,21 @@ record KnowledgeBase[] = {
 	 "WHY DO YOU WANT TO KNOW MY NAME?"}
 	},
 
-	{{"_HI", "_HELLO", "_HI_", "_HELLO_"},
-	{"HI THERE!",
-	 "HOW ARE YOU?",
-	 "HI!"}
+	{{"BATTERY", "CHARGE", "DRAIN"},
+	{"HAVE YOU TRIED A DIFFERENT CHARGER?",
+	 "IF YOUR BATTERY IS CONTINUOUSLY DRAINING, YOU MIGHT WANT TO SWITCH ON BATTERY SAVER MODE, AND KEEP BRIGHTNESS LOW"
+	 }
 	},
 
-	{{"_I"},
-	{"SO, YOU ARE TALKING ABOUT YOURSELF",
-	 "SO, THIS IS ALL ABOUT YOU?",
-	 "TELL ME MORE ABOUT YOURSELF."},
+	{{"ON LOCATION", "GPS", "MAPS NOT"},
+	{"GO TO SETTINGS / LOCATION AND MAKE SURE THAT THE ‘USE GPS SATELLITES’ OPTION IS TICKED."}
 	},
 
-	{{"_I WANT"},
-	{"WHY DO YOU WANT IT?",
-	 "IS THERE ANY REASON WHY YOU WANT THIS?",
-	 "IS THIS A WISH?",
-	 "WHAT ELSE YOU WANT?",
-	 "SO, YOU WANT*."}
+	{{"SLOW", "SPEED", "HANG", "FREEZE"},
+	{"YOU NEED TO UNINSTALL UNUSED APPS",
+     "DELETE BIG FILES FROM MEMORY CARD",
+     "DOWNLOAD CLEAN MASTER FOR ANDROID SMARTPHONE"
 	},
-
-	{{"_I WANT_"},
-	{"YOU WANT WHAT?"},
 	},
 
 	{{"_I HATE_"},
@@ -141,10 +132,7 @@ record KnowledgeBase[] = {
 	},
 
 	{{"SIGNON**"},
-	{"HELLO USER, WHAT IS YOUR NAME?",
-	 "HELLO USER, HOW ARE YOU DOING TODAY?",
-	 "HI USER, WHAT CAN I DO FOR YOU?",
-	 "YOU ARE NOW CHATING WITH CHATTERBOT11, ANYTHING YOU WANT TO DISCUSS?"}
+	{"HELLO USER, HOW CAN I HELP YOU TODAY?"}
 	},
 
 	{{"REPETITION T1**"},
@@ -576,7 +564,7 @@ void CBot::transpose( string &str )
 // Those who have a back and front (_keyWord_) underscore can be found only alone on an input.
 // The keywords who only have have an understandin the front can never be found at the end of an input.
 // And finaly, the keywords who have an underscore at the back should alway belocated at the end of the input.
-bool CBot::wrong_location(string keyword, char firstChar, char lastChar, size_t pos)
+/*bool CBot::wrong_location(string keyword, char firstChar, char lastChar, size_t pos)
 {
 	bool bWrongPos = 0;
 	pos += keyword.length();
@@ -587,7 +575,7 @@ bool CBot::wrong_location(string keyword, char firstChar, char lastChar, size_t 
 		bWrongPos = 1;
 	}
 	return bWrongPos;
-}
+}*/
 
 // make a search for the user's input
 // inside the database of the program
@@ -614,12 +602,12 @@ void CBot::find_match()
 
 			char firstChar = *keyWord.begin();
 			char lastChar = *(keyWord.end() - 1);
-			trimLR(keyWord, "_");
+			//trimLR(keyWord, "_");
 
 			// we inset a space character
 			// before and after the keyword to
 			// improve the matching process
-			insert_space(keyWord);
+			//insert_space(keyWord);
 
 			size_t keyPos = m_sInput.find(keyWord);
 
@@ -628,13 +616,15 @@ void CBot::find_match()
 			// a littlebit more flexible
 			if( keyPos != string::npos )
 			{
-				if(wrong_location(keyWord, firstChar, lastChar, keyPos) )
+				/*if(wrong_location(keyWord, firstChar, lastChar, keyPos) )
 				{
+				    cout<<"continued"<<endl;
 					continue;
-				}
+				}*/
 				if(keyWord.length() > bestKeyWord.length())
 				{
 					bestKeyWord = keyWord;
+					//cout<<"bestprocess:    "<<bestKeyWord<<endl;
 					index_vector.clear();
 					index_vector.push_back(i);
 				}
@@ -647,6 +637,7 @@ void CBot::find_match()
 	}
 	if(index_vector.size() > 0)
 	{
+	    //cout<<"best:  "<<bestKeyWord<<endl;
 		m_sKeyWord = bestKeyWord;
 		shuffle(index_vector, index_vector.size());
 		copy( KnowledgeBase[index_vector[0]].response, response_list, MAX_RESP );

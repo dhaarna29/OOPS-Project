@@ -9,7 +9,7 @@
 #include "strings.h"
 #include <iostream>
 #include <ctime>
-
+using namespace std;
 
 typedef struct {
 	char *keyword[MAX_INP];
@@ -23,13 +23,10 @@ typedef struct {
 
 
 class CBot {
-	
+
 public:
-	CBot (std::string str) 
-		:m_sBotName(str), m_bQuitProgram(0), m_sInput("null")
-	{ 
-		seed_random_generator();
-	}
+	CBot (string str)
+		:m_sBotName(str), m_bQuitProgram(0), m_sInput("null") {};
 	~CBot () {};
 
 	void get_input();
@@ -37,7 +34,7 @@ public:
 
 	void signon();
 
-	
+
 	bool quit() const {
 		return m_bQuitProgram;
 	}
@@ -46,11 +43,8 @@ private:
 	void find_match();
 	void handle_repetition();
 	void handle_user_repetition();
-	void handle_event(std::string str);
+	void handle_event(string str);
 
-	void seed_random_generator() {
-		srand((unsigned) time(NULL));
-	}
 
 	void select_response();
 
@@ -66,7 +60,7 @@ private:
 		m_sPrevEvent = m_sEvent;
 	}
 
-	void set_event(std::string str) {
+	void set_event(string str) {
 		m_sEvent = str;
 	}
 
@@ -74,20 +68,20 @@ private:
 		m_sInputBackup = m_sInput;
 	}
 
-	void set_input(std::string str) {
+	void set_input(string str) {
 		m_sInput = str;
 	}
-	
+
 	void restore_input() {
 		m_sInput = m_sInputBackup;
 	}
-	
+
 	void print_response() const {
 		if(m_sResponse.length() > 0) {
-			std::cout << m_sResponse << std::endl;
+			cout << m_sResponse << endl;
 		}
 	}
-	
+
 	void preprocess_input();
 
 	void preprocess_response();
@@ -95,7 +89,7 @@ private:
 	void find_subject();
 
 	bool bot_repeat() const {
-		return (m_sPrevResponse.length() > 0 && 
+		return (m_sPrevResponse.length() > 0 &&
 			m_sResponse == m_sPrevResponse);
 	}
 
@@ -114,7 +108,7 @@ private:
 	}
 
 	bool user_want_to_quit() const {
-		return m_sInput.find("BYE") != std::string::npos;
+		return m_sInput.find("BYE") != string::npos;
 	}
 
 	bool same_event() const {
@@ -129,28 +123,28 @@ private:
 		return (m_sInput.length() > 0  && m_sInput == m_sPrevInput);
 	}
 
-	bool wrong_location(std::string keyword, char firstChar, char lastChar, size_t pos);
+	bool wrong_location(string keyword, char firstChar, char lastChar, size_t pos);
 
 	bool similar_input() const;
 
-	void transpose(std::string &str);
+	void transpose(string &str);
 
 private:
-	std::string			m_sBotName;
-	std::string			m_sUserName;
-	std::string			m_sInput;
-	std::string			m_sResponse;
-	std::string			m_sPrevInput;
-	std::string			m_sPrevResponse;
-	std::string			m_sEvent;
-	std::string			m_sPrevEvent;
-	std::string			m_sInputBackup;
-	std::string			m_sSubject;
-	std::string			m_sKeyWord;
+	string			m_sBotName;
+	string			m_sUserName;
+	string			m_sInput;
+	string			m_sResponse;
+	string			m_sPrevInput;
+	string			m_sPrevResponse;
+	string			m_sEvent;
+	string			m_sPrevEvent;
+	string			m_sInputBackup;
+	string			m_sSubject;
+	string			m_sKeyWord;
 	bool				m_bQuitProgram;
 
 	vstring				response_list;
-	
+
 };
 
 #endif
