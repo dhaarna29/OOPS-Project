@@ -10,6 +10,7 @@
 
 #include "chatterbot10.h"
 #include "strings.cpp"
+using namespace std;
 
 record KnowledgeBase[] = {
 	{{"WHAT IS YOUR NAME"},
@@ -485,11 +486,11 @@ void CBot::signon()
 
 void CBot::get_input()
 {
-	std::cout << ">";
+	cout << ">";
 
 	// saves the previous input
 	save_prev_input();
-	std::getline(std::cin, m_sInput);
+	getline(cin, m_sInput);
 
 	preprocess_input();
 }
@@ -503,7 +504,7 @@ void CBot::preprocess_input()
 
 void CBot::preprocess_response()
 {
-	if(m_sResponse.find("*") != std::string::npos)
+	if(m_sResponse.find("*") != string::npos)
 	{
 		// extracting from input
 		find_subject();
@@ -519,7 +520,7 @@ void CBot::find_subject()
 	m_sSubject.erase(); // resets subject variable
 	trimRight(m_sInput, " ");
 	size_t pos = m_sInput.find(m_sKeyWord);
-	if(pos != std::string::npos)
+	if(pos != string::npos)
 	{
 		m_sSubject = m_sInput.substr(pos + m_sKeyWord.length() - 1, m_sInput.length());
 	}
@@ -528,29 +529,29 @@ void CBot::find_subject()
 bool CBot::user_repeat() const
 {
 	return (m_sPrevInput.length() > 0 &&
-		((m_sInput == m_sPrevInput) || (m_sInput.find(m_sPrevInput) != std::string::npos) ||
-		(m_sPrevInput.find(m_sInput) != std::string::npos)));
+		((m_sInput == m_sPrevInput) || (m_sInput.find(m_sPrevInput) != string::npos) ||
+		(m_sPrevInput.find(m_sInput) != string::npos)));
 }
 
 bool CBot::similar_input() const
 {
-	return (m_sInput.length() > 0 && (m_sInput.find(m_sPrevInput) != std::string::npos ||
-			m_sPrevInput.find(m_sInput) != std::string::npos));
+	return (m_sInput.length() > 0 && (m_sInput.find(m_sPrevInput) != string::npos ||
+			m_sPrevInput.find(m_sInput) != string::npos));
 }
 
 // implementing the 'sentence transposition' feature
-void CBot::transpose( std::string &str )
+void CBot::transpose( string &str )
 {
 	bool bTransposed = 0;
 	for(int i = 0; i < transposListSize; ++i)
 	{
-		std::string first = transposList[i].first;
+		string first = transposList[i].first;
 		insert_space(first);
-		std::string second = transposList[i].second;
+		string second = transposList[i].second;
 		insert_space(second);
 
 		size_t pos = replace(str, first, second);
-		if(pos != std::string::npos)
+		if(pos != string::npos)
 		{
 			bTransposed = 1;
 		}
@@ -560,9 +561,9 @@ void CBot::transpose( std::string &str )
 	{
 		for( int i = 0; i < transposListSize; ++i )
 		{
-			std::string first = transposList[i].first;
+			string first = transposList[i].first;
 			insert_space(first);
-			std::string second = transposList[i].second;
+			string second = transposList[i].second;
 			insert_space(second);
 			size_t pos = replace(str, second, first);
 		}
@@ -575,7 +576,7 @@ void CBot::transpose( std::string &str )
 // Those who have a back and front (_keyWord_) underscore can be found only alone on an input.
 // The keywords who only have have an understandin the front can never be found at the end of an input.
 // And finaly, the keywords who have an underscore at the back should alway belocated at the end of the input.
-bool CBot::wrong_location(std::string keyword, char firstChar, char lastChar, size_t pos)
+bool CBot::wrong_location(string keyword, char firstChar, char lastChar, size_t pos)
 {
 	bool bWrongPos = 0;
 	pos += keyword.length();
@@ -597,8 +598,8 @@ void CBot::find_match()
 	// introduce thse new "string variable" to help
 	// support the implementation of keyword ranking
 	// during the matching process
-	std::string bestKeyWord;
-	std::vector<int> index_vector;
+	string bestKeyWord;
+	vector<int> index_vector;
 
 	for(int i = 0; i < nKnowledgeBaseSize; ++i)
 	{
@@ -609,7 +610,7 @@ void CBot::find_match()
 
 		for(int j = 0; j < keyWordList.size(); ++j)
 		{
-			std::string keyWord(keyWordList[j]);
+			string keyWord(keyWordList[j]);
 
 			char firstChar = *keyWord.begin();
 			char lastChar = *(keyWord.end() - 1);
@@ -625,7 +626,7 @@ void CBot::find_match()
 			// there has been some improvements made in
 			// here in order to make the matching process
 			// a littlebit more flexible
-			if( keyPos != std::string::npos )
+			if( keyPos != string::npos )
 			{
 				if(wrong_location(keyWord, firstChar, lastChar, keyPos) )
 				{
@@ -736,7 +737,7 @@ void CBot::handle_user_repetition()
 	}
 }
 
-void CBot::handle_event(std::string str)
+void CBot::handle_event(string str)
 {
 	save_prev_event();
 	set_event(str);
@@ -757,7 +758,7 @@ void CBot::handle_event(std::string str)
 
 int main()
 {
-	std::cout << "Chatterbot v10.0 Copyright (C) 2009 Gonzales Cenelia\n" << std::endl;
+	cout << "Chatterbot v10.0 Copyright (C) 2009 Gonzales Cenelia\n" << endl;
 
 	try
 	{
@@ -770,13 +771,13 @@ int main()
 			bot.respond();
 		}
 	}
-	catch(std::string str)
+	catch(string str)
 	{
-		std::cerr << str << std::endl;
+		cerr << str << endl;
 	}
 	catch(...)
 	{
-		std::cerr << "The program has stop due to some unknown exception" << std::endl;
+		cerr << "The program has stop due to some unknown exception" << endl;
 	}
 
 	return 0;
