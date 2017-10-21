@@ -1,7 +1,6 @@
 //
 // Description: This is the interface for chatterbot10
 //
-// Author: Gonzales Cenelia
 //
 #ifndef __CHATTERBOT10_H__
 #define __CHATTERBOT10_H__
@@ -130,20 +129,20 @@ private:
 	void transpose(string &str);
 
 private:
-	string			m_sBotName;
-	string			m_sUserName;
-	string			m_sInput;
-	string			m_sResponse;
-	string			m_sPrevInput;
-	string			m_sPrevResponse;
-	string			m_sEvent;
-	string			m_sPrevEvent;
-	string			m_sInputBackup;
-	string			m_sSubject;
-	string			m_sKeyWord;
-	bool				m_bQuitProgram;
+	string	m_sBotName;
+	string	m_sUserName;
+	string	m_sInput;
+	string	m_sResponse;
+	string	m_sPrevInput;
+	string	m_sPrevResponse;
+	string	m_sEvent;
+	string	m_sPrevEvent;
+	string	m_sInputBackup;
+	string	m_sSubject;
+	string	m_sKeyWord;
+	bool m_bQuitProgram;
 
-	vstring				response_list;
+	vstring	response_list;
 
 };
 
