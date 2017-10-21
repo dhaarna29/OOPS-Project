@@ -30,7 +30,7 @@ void shopping::display()
     cout<<"14MP primary camera and 6MP front facing camera\n";
     cout<<"4GB RAM, 64GB internal memory expandable up to 128GB with micro SD card\n";
 
-    cout<<"PHONE 2 (Gold)\n";
+    cout<<"PHONE 4 (Gold)\n";
     cout<<"Rs. 9999\nYou save 22%\n";
     cout<<"10MP primary camera and 8MP front facing camera\n";
     cout<<"3GB RAM, 32GB internal memory with Hybrid SIM slot: Supports nano SIM / Micro SIM / MicroSD card\n";
